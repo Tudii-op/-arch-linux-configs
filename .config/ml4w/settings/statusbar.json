@@ -1,0 +1,31 @@
+{
+    "bar": {
+        "enabled": true,
+        "alwaysExpanded": false,
+        "autohide": true,
+        "hideDelay": 0
+    },
+    "pill": {
+        "expandedWidth": 900,
+        "animationDuration": 80
+    },
+    "modules": {
+        "left": [
+            "workspaces",
+            "sysstats"
+        ],
+        "center": [
+            "clock",
+            "swaync"
+        ],
+        "right": [
+            "updates",
+            "battery",
+            "powerprofile",
+            "volume",
+            "systemtray",
+            "logo",
+            "power"
+        ]
+    }
+}

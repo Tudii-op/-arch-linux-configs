@@ -1,0 +1,44 @@
+/* -----------------------------------------------------
+ * ML4W Crimson - pink / violet / red glow
+ * pink + red follow the wallpaper (matugen), violet is fixed
+ * ----------------------------------------------------- */
+@import '../../../../../.config/waybar/colors.css';
+@import '../../ml4w-glass/style.css';
+
+.modules-left, .modules-center, .modules-right {
+    border-radius: 14px;
+    background: linear-gradient(135deg, alpha(@surface_container,0.9), alpha(@surface_dim,0.9)) padding-box,
+        linear-gradient(135deg, @primary, #b26bff, @inverse_primary) border-box;
+    border: 2px solid transparent;
+    opacity: 0.94;
+    box-shadow: 0 0 14px alpha(#b26bff,0.35), 0 0 6px alpha(@primary,0.35);
+}
+
+#workspaces button {
+    color: @on_surface_variant;
+    border-radius: 8px;
+}
+
+#workspaces button.active {
+    color: @on_primary;
+    background: linear-gradient(135deg, @primary, #b26bff);
+    border-radius: 8px;
+    min-width: 34px;
+    box-shadow: 0 0 10px alpha(#b26bff,0.8);
+}
+
+#workspaces button:hover {
+    background: alpha(@inverse_primary,0.5);
+    border-radius: 8px;
+}
+
+tooltip {
+    border-radius: 12px;
+    background: alpha(@surface_container_high,0.95) padding-box,
+        linear-gradient(135deg, @primary, #b26bff, @inverse_primary) border-box;
+    border: 1px solid transparent;
+    opacity: 1;
+}
+
+#clock { color: @primary; }
+#battery.charging, #battery.plugged { color: #b26bff; }

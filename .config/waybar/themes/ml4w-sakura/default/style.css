@@ -1,0 +1,43 @@
+/* -----------------------------------------------------
+ * ML4W Sakura - pink/purple glow, colors come from the wallpaper (matugen)
+ * ----------------------------------------------------- */
+@import '../../../../../.config/waybar/colors.css';
+@import '../../ml4w-glass/style.css';
+
+/* Overrides on top of the glass base */
+.modules-left, .modules-center, .modules-right {
+    border-radius: 18px;
+    background: linear-gradient(135deg, alpha(@surface_container_high,0.85), alpha(@surface_dim,0.85)) padding-box,
+        linear-gradient(135deg, @primary, @tertiary, @secondary) border-box;
+    border: 2px solid transparent;
+    opacity: 0.92;
+    box-shadow: 0 0 12px alpha(@primary,0.35), inset 0 1px 1px alpha(@on_surface,0.25);
+}
+
+#workspaces button {
+    color: @on_surface_variant;
+    border-radius: 10px;
+}
+
+#workspaces button.active {
+    color: @on_primary;
+    background: linear-gradient(135deg, @primary, @tertiary);
+    border-radius: 12px;
+    min-width: 34px;
+    box-shadow: 0 0 8px alpha(@primary,0.7);
+}
+
+#workspaces button:hover {
+    background: alpha(@tertiary,0.35);
+    border-radius: 12px;
+}
+
+tooltip {
+    border-radius: 14px;
+    background: alpha(@surface_container_high,0.95) padding-box,
+        linear-gradient(135deg, @primary, @tertiary) border-box;
+    border: 1px solid transparent;
+    opacity: 1;
+}
+
+#clock { color: @primary; }

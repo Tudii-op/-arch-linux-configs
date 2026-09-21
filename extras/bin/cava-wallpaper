@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+# Music visualizer on the desktop background (below all windows, above the wallpaper).
+# Usage: cava-wallpaper [toggle|start|stop|autostart]
+CONF="$HOME/.config/cava/wallpaper.conf"
+STATE="$HOME/.config/ml4w/settings/cava-wallpaper"   # on | off
+HEIGHT_PERCENT=35                                    # share of the screen height used by the bars
+
+# kitty rewrites --class into --app-id in the process arguments
+PATTERN="app-id=cava-wallpaper cava -p"
+running() { pgrep -f "$PATTERN" >/dev/null; }
+
+start() {
+    running && return
+    local h top
+    h=$(hyprctl monitors -j | jq '[.[] | select(.focused)][0].height')
+    top=$(( h * (100 - HEIGHT_PERCENT) / 100 ))
+    echo on > "$STATE"
+    nohup kitten panel --edge=center --layer=bottom --focus-policy=not-allowed \
+        --margin-top="$top" --class=cava-wallpaper \
+        -o background_opacity=0 -o window_padding_width=0 -o font_size=4 \
+        -o confirm_os_window_close=0 -o cursor_blink_interval=0 \
+        cava -p "$CONF" >/dev/null 2>&1 &
+}
+
+stop() {
+    echo off > "$STATE"
+    pkill -f "$PATTERN"
+}
+
+case "${1:-toggle}" in
+    start)     start ;;
+    stop)      stop ;;
+    autostart) [ "$(cat "$STATE" 2>/dev/null)" = "off" ] || start ;;
+    toggle)    if running; then stop; else start; fi ;;
+    *)         echo "Usage: cava-wallpaper [toggle|start|stop|autostart]"; exit 1 ;;
+esac
