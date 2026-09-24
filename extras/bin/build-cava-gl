@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# Build the custom cava-gl binary used by cava-circle (cava fork with a
+# transparent wlr-layer-shell GLSL output) and install it to ~/.local/bin.
+# Stock /usr/bin/cava is left alone (cava-wallpaper still uses it).
+set -euo pipefail
+
+REPO="https://github.com/Tudii-op/cava.git"
+BRANCH="layer-shell-glsl"
+SRC="$HOME/dev/cava-src"
+DEST="$HOME/.local/bin/cava-gl"
+
+sudo pacman -S --needed --noconfirm base-devel cmake git fftw iniparser ncurses \
+    pipewire libpulse sdl2 mesa wayland libglvnd
+
+if [ -d "$SRC/.git" ]; then
+    git -C "$SRC" fetch "$REPO" "$BRANCH"
+    git -C "$SRC" checkout -B "$BRANCH" FETCH_HEAD
+else
+    git clone -b "$BRANCH" "$REPO" "$SRC"
+fi
+
+cmake -S "$SRC" -B "$SRC/build" -DCMAKE_BUILD_TYPE=Release
+cmake --build "$SRC/build" -j"$(nproc)"
+
+# temp file + mv: a running cava-gl can't be overwritten in place
+mkdir -p "$(dirname "$DEST")"
+cp "$SRC/build/cava" "$DEST.new"
+mv "$DEST.new" "$DEST"
+chmod +x "$DEST"
+echo "Installed $DEST"

@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# Circular music visualizer on the desktop background (layer-shell surface,
+# below all windows, above the wallpaper) -- same idea as cava-wallpaper,
+# just rendered by our self-built cava-gl (layer-shell + transparent GLSL)
+# instead of a kitty-wrapped terminal.
+# Usage: cava-circle [toggle|start|stop|autostart]
+CONF="$HOME/.config/cava/circle.conf"
+STATE="$HOME/.config/ml4w/settings/cava-circle"   # on | off
+CAVA_GL="$HOME/.local/bin/cava-gl"                # self-built cava with layer-shell sdl_glsl output
+
+PATTERN="cava-gl -p $CONF"
+running() { pgrep -f "$PATTERN" >/dev/null; }
+
+start() {
+    running && return
+    echo on > "$STATE"
+    nohup "$CAVA_GL" -p "$CONF" >/dev/null 2>&1 &
+    disown
+}
+
+stop() {
+    echo off > "$STATE"
+    pkill -f "$PATTERN"
+}
+
+case "${1:-toggle}" in
+    start)     start ;;
+    stop)      stop ;;
+    autostart) [ "$(cat "$STATE" 2>/dev/null)" = "off" ] || start ;;
+    toggle)    if running; then stop; else start; fi ;;
+    *)         echo "Usage: cava-circle [toggle|start|stop|autostart]"; exit 1 ;;
+esac

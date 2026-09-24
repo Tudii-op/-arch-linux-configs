@@ -86,3 +86,8 @@ post_hook = "jq --slurpfile palette ~/.config/ohmyposh/colors.json '. + $palette
 input_path = '~/.config/matugen/templates/cava-wallpaper.conf'
 output_path = '~/.config/cava/wallpaper.conf'
 post_hook = 'pkill -USR1 -x cava'
+
+[templates.cava_circle]
+input_path = '~/.config/matugen/templates/cava-circle.conf'
+output_path = '~/.config/cava/circle.conf'
+post_hook = 'pkill -USR2 -x cava-gl'

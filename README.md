@@ -7,6 +7,7 @@ Personal setup on top of [ML4W dotfiles](https://github.com/mylinuxforwork/dotfi
 - **Hyprland:** gradient borders, rounding 10, blur/shadow, opacity 0.95/0.75, custom keybinds; `hypr/custom.lua` for personal additions
 - **Quickshell status bar:** autohide, custom module layout, edited stats/updates/logo modules; dock disabled
 - **Cava music visualizer on the wallpaper:** `extras/bin/cava-wallpaper` + matugen template (colors follow the wallpaper), toggle with `SUPER+CTRL+V`
+- **Cava circle visualizer:** `extras/bin/cava-circle` (multi-ring circle on a transparent layer-shell surface) + matugen template, toggles together with the bars on `SUPER+CTRL+V`. Needs the custom `cava-gl` binary: run `extras/bin/build-cava-gl` (builds [Tudii-op/cava@layer-shell-glsl](https://github.com/Tudii-op/cava/tree/layer-shell-glsl) into `~/.local/bin/cava-gl`)
 - **matugen:** extra templates (cava, oh-my-posh, quickshell overview, ML4W settings)
 - **extras/**: Neovim config, cava config, and `cava-wallpaper` (live outside the ML4W dir; copy to `~/.config/nvim`, `~/.config/cava`, `~/.local/bin`)
 
