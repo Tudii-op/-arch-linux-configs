@@ -3,12 +3,18 @@
 # below all windows, above the wallpaper) -- same idea as cava-wallpaper,
 # just rendered by our self-built cava-gl (layer-shell + transparent GLSL)
 # instead of a kitty-wrapped terminal.
+# Also runs the "wings": mirrored bars on both sides of the circle at its
+# height (wings.conf, mirror_wings.frag). Set WINGS=off to run the circle alone.
 # Usage: cava-circle [toggle|start|stop|autostart]
 CONF="$HOME/.config/cava/circle.conf"
+WINGS_CONF="$HOME/.config/cava/wings.conf"
+WINGS=on
 STATE="$HOME/.config/ml4w/settings/cava-circle"   # on | off
 CAVA_GL="$HOME/.local/bin/cava-gl"                # self-built cava with layer-shell sdl_glsl output
+CAVA_COLORS="$HOME/.local/bin/cava-colors"        # also centers the wings on the circle
 
 PATTERN="cava-gl -p $CONF"
+WINGS_PATTERN="cava-gl -p $WINGS_CONF"
 running() { pgrep -f "$PATTERN" >/dev/null; }
 
 start() {
@@ -16,11 +22,17 @@ start() {
     echo on > "$STATE"
     nohup "$CAVA_GL" -p "$CONF" >/dev/null 2>&1 &
     disown
+    if [ "$WINGS" = on ] && [ -f "$WINGS_CONF" ]; then
+        "$CAVA_COLORS" wings >/dev/null 2>&1   # if it fails, wings.conf keeps its last colors
+        nohup "$CAVA_GL" -p "$WINGS_CONF" >/dev/null 2>&1 &
+        disown
+    fi
 }
 
 stop() {
     echo off > "$STATE"
     pkill -f "$PATTERN"
+    pkill -f "$WINGS_PATTERN"
 }
 
 case "${1:-toggle}" in

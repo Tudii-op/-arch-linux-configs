@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
-# Build the custom cava-gl binary used by cava-circle (cava fork with a
-# transparent wlr-layer-shell GLSL output) and install it to ~/.local/bin.
-# Stock /usr/bin/cava is left alone (cava-wallpaper still uses it).
+# Build the custom cava-gl binary used by cava-circle and cava-wallpaper (cava
+# fork with a transparent wlr-layer-shell GLSL output, plus peaks/color_phase/
+# beat uniforms) and install it to ~/.local/bin. Stock /usr/bin/cava is left
+# alone (cava-wallpaper's BACKEND=terminal still uses it).
 set -euo pipefail
 
 REPO="https://github.com/Tudii-op/cava.git"
